@@ -1,1 +1,16 @@
 RewriteEngine On
+
+# Rediriger toutes les requêtes vers index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Sécurité : bloquer l'accès aux fichiers sensibles
+<FilesMatch "\.(key|log)$">
+    Require all denied
+</FilesMatch>
+
+# Permettre l'accès aux DLL
+<FilesMatch "\.dll$">
+    Require all granted
+</FilesMatch>
